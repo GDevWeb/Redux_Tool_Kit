@@ -1,4 +1,4 @@
-import Counter from "./pages/Counter";
+import Counter from "./pages/Counter/Counter";
 
 function App() {
   return (
