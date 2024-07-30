@@ -4,17 +4,20 @@ const initialState = {
   value: 0,
 };
 
-export const counter = createSlice({
+export const counterSlice = createSlice({
   name: "counter",
   initialState,
   reducers: {
     increment: (state, action) => {
       state.value++; //avec RTK cette méthode est permis grâce à "Immer js" qui en backstage s'occuper du state sans pour autant provoquer de mutation.
     },
+    decrement: (state) => {
+      state.value--;
+    },
   },
 });
 
-console.log(counter);
+console.log(counterSlice);
 // exportation :
-const { increment } = counter.actions;
-export default counter.reducer;
+export const { increment, decrement } = counterSlice.actions;
+export default counterSlice.reducer;
