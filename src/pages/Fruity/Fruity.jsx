@@ -6,6 +6,7 @@ import { FruityCart } from "./FruityCart";
 export const Fruity = () => {
   const fruitsList = useSelector((state) => state.fruits);
   const dispatch = useDispatch();
+  console.log(addOne());
 
   return (
     <>

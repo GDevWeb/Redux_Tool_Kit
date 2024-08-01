@@ -1,10 +1,6 @@
----
-
-# Redux - Day 01 - basics
-
 <div style="text-align:center">
 <h1>Redux Tool Kit</h1>
-<img src="./img/logo_redux.png"
+<img src="./logo_redux.png"
      alt="ReduxData Flow Diagram"
      style="width: 200px; margin: 20px auto; height: auto; border-radius: 10px; ";/>
 
@@ -28,7 +24,12 @@
     - [3. `createAsyncThunk`](#3-createasyncthunk)
     - [4. `createReducer`](#4-createreducer)
     - [5. `useSelector` et `useDispatch`](#5-useselector-et-usedispatch)
-- [Conclusion](#conclusion)
+    - [6. `Les extraReducers` avec Redux Toolkit](#6-les-extrareducers-avec-redux-toolkit)
+      - [Contexte](#contexte)
+      - [Pourquoi les `extraReducers` ?](#pourquoi-les-extrareducers-)
+      - [Fonctionnement](#fonctionnement)
+      - [Conclusion](#conclusion)
+- [Conclusion](#conclusion-1)
 
 # Introduction
 
@@ -278,6 +279,81 @@ const CounterComponent = () => {
   );
 };
 ```
+
+### 6. `Les extraReducers` avec Redux Toolkit
+
+#### Contexte
+
+Dans Redux, les reducers sont des fonctions qui déterminent comment l'état de l'application change en réponse à une action. Avec Redux Toolkit, une approche simplifiée pour gérer les reducers a été introduite via `createSlice`. Ce dernier permet de définir facilement des reducers et actions ensemble pour une partie spécifique de l'état.
+
+#### Pourquoi les `extraReducers` ?
+
+Les `extraReducers` sont utilisés pour gérer les actions définies en dehors du slice actuel. Cela est particulièrement utile dans les scénarios suivants :
+
+1. **Actions provenant d'autres slices** : Parfois, une action dans un slice peut nécessiter de mettre à jour l'état dans un autre slice. Les `extraReducers` permettent de capturer ces actions et d'agir en conséquence.
+2. **Actions asynchrones** : Lors de l'utilisation de `createAsyncThunk` pour les opérations asynchrones (comme les appels API), les `extraReducers` permettent de gérer les états de requête (loading, success, error) en réponse aux actions générées par le thunk.
+
+#### Fonctionnement
+
+Les `extraReducers` utilisent un objet builder pour définir des "cases" (réductions) qui correspondent à des types d'action spécifiques. Voici un aperçu de la syntaxe et du fonctionnement :
+
+- **Syntaxe Basée sur `builder`** :
+
+  ```javascript
+  extraReducers: (builder) => {
+    builder.addCase("someActionType", (state, action) => {
+      // Logique de mise à jour de l'état ici
+    });
+    // Ajoutez d'autres cases ici si nécessaire
+  };
+  ```
+
+- **Exemple Pratique** :
+  Supposons que nous ayons une action `addOne` dans un slice `fruitsCart` qui doit également mettre à jour un autre slice `fruits`. Nous pouvons utiliser `extraReducers` pour gérer cette interaction.
+
+  ```javascript
+  import { createSlice } from "@reduxjs/toolkit";
+  import { nanoid } from "nanoid";
+
+  const initialState = {
+    list: [
+      {
+        id: nanoid(8),
+        name: "Mango",
+        url: "/images/mango.jpg",
+        price: 5,
+      },
+      {
+        id: nanoid(8),
+        name: "Watermelon",
+        url: "/images/watermelon.jpg",
+        price: 4,
+      },
+    ],
+  };
+
+  export const fruits = createSlice({
+    name: "fruits",
+    initialState,
+    reducers: {
+      // reducers locaux ici
+    },
+    extraReducers: (builder) => {
+      builder.addCase("fruitsCart/addOne", (state, action) => {
+        console.log("Action intercepted in fruits reducer", action.payload);
+        // Logique additionnelle, par exemple, mettre à jour le stock
+      });
+    },
+  });
+
+  export default fruits.reducer;
+  ```
+
+Dans cet exemple, lorsque l'action `fruitsCart/addOne` est dispatchée, même si elle est définie dans un autre slice, le slice `fruits` peut réagir et mettre à jour son état en conséquence.
+
+#### Conclusion
+
+Les `extraReducers` dans Redux Toolkit offrent une méthode flexible et puissante pour gérer les actions qui ne sont pas définies localement dans le même slice. Ils permettent de séparer les concerns, facilitent le partage de la logique entre plusieurs slices, et améliorent la gestion des effets secondaires comme les requêtes API.
 
 ---
 
