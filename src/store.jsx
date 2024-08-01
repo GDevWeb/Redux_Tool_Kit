@@ -3,13 +3,14 @@ import logger from "redux-logger";
 import counterReducer from "./features/Counter/counter";
 import fruitsCart from "./features/Fruits/fruitsCart";
 import fruits from "./features/Fruits/slices/fruits";
+import promotionsSlice from "./features/Fruits/slices/promotionsSlice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     fruits,
     fruitsCart,
-    // promotions: promotionsSlice,
+    promotions: promotionsSlice,
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware().concat(customMiddleWare),

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
 import { addOne, removeOne, resetCart } from "../fruitsCart";
 
 const initialState = {
@@ -14,29 +13,28 @@ export const promotionsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(addOne, (state, action) => {
-        const cart = useSelector((state) => state.fruitCart.cart);
+        const cart = action.payload.cart || [];
 
-        const totalQuantity = action.payload.cart.reduce(
+        const totalQuantity = cart.reduce(
           (acc, fruit) => acc + fruit.quantity,
           0
         );
 
-        if (totalQuantity >= 2) {
+        if (totalQuantity >= 10) {
           state.discount = 10;
         } else {
           state.discount = 0;
         }
       })
       .addCase(removeOne, (state, action) => {
-        if (action.payload.cart) {
-          const totalQuantity = action.payload.cart.reduce(
-            (acc, fruit) => acc + fruit.quantity,
-            0
-          );
+        const cart = action.payload.cart || [];
+        const totalQuantity = cart.reduce(
+          (acc, fruit) => acc + fruit.quantity,
+          0
+        );
 
-          if (totalQuantity < 2) {
-            state.discount = 0;
-          }
+        if (totalQuantity <= 10) {
+          state.discount = 0;
         }
       })
       .addCase(resetCart, (state) => {
