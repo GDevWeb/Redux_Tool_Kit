@@ -1,3 +1,5 @@
+# Redux - Day 01 - basics
+
 <div style="text-align:center">
 <h1>Redux Tool Kit</h1>
 <img src="./logo_redux.png"
@@ -6,10 +8,10 @@
 
 </div>
 
----
-
 ## Summary :
 
+- [Redux - Day 01 - basics](#redux---day-01---basics)
+  - [Summary :](#summary-)
 - [Introduction](#introduction)
 - [Pourquoi utiliser Redux Tool Kit ou non pas Redux ?](#pourquoi-utiliser-redux-tool-kit-ou-non-pas-redux-)
   - [Installation](#installation)
