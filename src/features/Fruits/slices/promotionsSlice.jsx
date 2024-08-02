@@ -13,7 +13,8 @@ export const promotionsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(addOne, (state, action) => {
-        const cart = action.payload.cart || [];
+        const cart = action.payload.cart || []; // Défaut à un tableau vide si `cart` est indéfini
+        console.log("Current cart in promotions:", cart);
 
         const totalQuantity = cart.reduce(
           (acc, fruit) => acc + fruit.quantity,
@@ -28,24 +29,22 @@ export const promotionsSlice = createSlice({
       })
       .addCase(removeOne, (state, action) => {
         const cart = action.payload.cart || [];
+        console.log("Current cart in promotions:", cart);
+
         const totalQuantity = cart.reduce(
           (acc, fruit) => acc + fruit.quantity,
           0
         );
 
-        if (totalQuantity <= 10) {
+        if (totalQuantity < 10) {
           state.discount = 0;
         }
       })
-      .addCase(resetCart, (state) => {
+      .addCase(resetCart, (state, action) => {
+        console.log("Cart has been reset");
         state.discount = 0;
       });
   },
 });
 
 export default promotionsSlice.reducer;
-
-/* 
-@ revoir, je n'arrive pas à correctement m'en servir ...
-
-*/

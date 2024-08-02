@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import logger from "redux-logger";
 import counterReducer from "./features/Counter/counter";
 import fruitsCart from "./features/Fruits/fruitsCart";
+import stockMiddleware from "./features/Fruits/middleware/stockMiddleWare";
 import fruits from "./features/Fruits/slices/fruits";
 
 export const store = configureStore({
@@ -14,7 +14,9 @@ export const store = configureStore({
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware().concat(customMiddleWare),
 
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(stockMiddleware),
 });
 
 // function customMiddleWare(store) {
