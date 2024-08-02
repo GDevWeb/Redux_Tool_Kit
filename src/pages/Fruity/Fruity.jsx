@@ -33,20 +33,27 @@ export const Fruity = () => {
                   Per unit : {fruit.price}€
                 </p>
               </div>
-              <div className="flex gap-2">
-                <button
-                  className="w-full bg-green-600 hover:bg-green-500 text-slate-100 p-1 rounded text-lg"
-                  onClick={() => dispatch(addOne(fruit))}
-                >
-                  Add one
-                </button>
-                <button
-                  className="w-full bg-red-600 hover:bg-red-500 text-slate-100 p-1 rounded text-lg"
-                  onClick={() => dispatch(removeOne(fruit.id))}
-                >
-                  Remove one
-                </button>
+              <div className="flex justify-between items-baseline mb-4">
+                <p className="text-lg font-semibold">Origin : {fruit.origin}</p>
+                <p className="text-lg font-semibold">
+                  Quantity : {fruit.quantity}
+                </p>
               </div>
+
+              {fruit.quantity > 0 ? (
+                <div className="flex gap-2">
+                  <button
+                    className="w-full bg-green-600 hover:bg-green-500 text-slate-100 p-1 rounded text-lg"
+                    onClick={() => dispatch(addOne(fruit, fruitsList))}
+                  >
+                    Add one
+                  </button>
+                </div>
+              ) : (
+                <p className="text-lg font-semibold text-center text-red-500">
+                  Sorry, we're out of stock
+                </p>
+              )}
             </li>
           );
         })}

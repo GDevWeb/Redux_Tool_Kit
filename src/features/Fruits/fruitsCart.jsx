@@ -33,7 +33,7 @@ export const fruitsCarts = createSlice({
     },
     removeOne: (state, action) => {
       const findIndex = state.cart.findIndex(
-        (element) => element.id === action.payload
+        (element) => element.id === action.payload.id
       );
       if (findIndex !== -1) {
         if (state.cart[findIndex].quantity === 1) {
@@ -56,6 +56,8 @@ export const fruitsCarts = createSlice({
       if (window.confirm("Do you really want to reset your cart?")) {
         state.cart = [];
         state.discount = 0; // Réinitialiser la réduction
+
+        // Gérer les stocks :
       }
     },
   },
